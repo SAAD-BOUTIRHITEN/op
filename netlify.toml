@@ -1,0 +1,27 @@
+# Déploiement Netlify — Lunéa Optique
+#
+# Le runtime Next.js de Netlify s'installe tout seul dès que Netlify détecte
+# Next.js. Il n'est volontairement pas déclaré ici : laissé à Netlify, il reçoit
+# les correctifs de sécurité et les mises à jour de compatibilité sans
+# intervention. Ne l'épingler que si une version précise devient nécessaire.
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  # Next.js 16 exige Node 20.9 au minimum. On épingle pour ne pas dépendre de
+  # la valeur par défaut de Netlify, qui peut être plus ancienne.
+  NODE_VERSION = "22"
+
+# Les en-têtes de sécurité vivent dans next.config.ts et sont appliqués par le
+# runtime. Ne pas les dupliquer ici : deux sources de vérité finissent
+# toujours par diverger.
+#
+# Les redirections .com -> .live, .me -> .live et www -> apex ne sont pas
+# déclarées ici : elles vivent dans next.config.ts (redirects() avec
+# `has: [{ type: "host" }]`), en code plutôt que dans la config d'hébergeur,
+# pour rester vraies quel que soit l'hébergeur. Netlify doit seulement
+# recevoir les trois domaines (luneaoptique.live en principal,
+# luneaoptique.me et luneaoptique.com en additionnels) et le certificat TLS
+# de chacun ; le routage HTTP lui-même est dans le code.

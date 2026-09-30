@@ -1,0 +1,148 @@
+@import "tailwindcss";
+
+/* --------------------------------------------------------------------------
+   Système de design — Lunéa Optique
+   Concept 2 : Moderne & Sophistiqué. Valeurs reprises du moodboard.
+   -------------------------------------------------------------------------- */
+
+@theme {
+  /* Couleurs */
+  --color-noir: #111111;
+  --color-noir-soft: #2a2a2a;
+  --color-creme: #f8f6f2;
+  --color-creme-deep: #efeae2;
+  --color-beige: #d4b895;
+  --color-beige-deep: #e4dccf;
+  --color-taupe: #6b5e52;
+  --color-or: #d4af7c;
+  /*
+    Or lisible sur fond clair : 4,90:1 contre le crème, là où le `--color-or`
+    de marque tombe à 1,90:1. Réservé au texte doré et aux indicateurs d'état
+    sur fond clair — le filet de marque et les ornements gardent l'or clair.
+  */
+  --color-or-deep: #8a6524;
+  --color-hairline: rgb(17 17 17 / 0.1);
+  --color-hairline-inverse: rgb(248 246 242 / 0.14);
+  --color-creme-muted: rgb(248 246 242 / 0.72);
+  --color-creme-faint: rgb(248 246 242 / 0.58);
+
+  /* Typographie */
+  --font-serif: var(--font-playfair), Georgia, "Times New Roman", serif;
+  /* Famille distincte : sa police n'est pas préchargée (voir app/layout.tsx). */
+  --font-serif-italic: var(--font-playfair-italic), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+
+  --text-display: clamp(2.5rem, 8.5vw, 5.75rem);
+  --text-display--line-height: 1.02;
+  --text-display--letter-spacing: -0.015em;
+
+  --text-title: clamp(1.875rem, 4.6vw, 3.25rem);
+  --text-title--line-height: 1.1;
+  --text-title--letter-spacing: -0.01em;
+
+  --text-frame: 1.25rem;
+  --text-frame--line-height: 1.3;
+
+  /*
+    Échelle du corps et de l'interface. Cinq marches nommées, là où
+    l'implémentation avait dérivé vers quinze valeurs arbitraires entre
+    0,53 et 0,97rem — la plupart séparées de moins d'un pixel, donc sans
+    intention. Une hiérarchie qu'on ne peut pas nommer n'en est pas une.
+  */
+  --text-body: 0.97rem;
+  --text-body--line-height: 1.7;
+  --text-body-sm: 0.875rem;
+  --text-body-sm--line-height: 1.6;
+  --text-ui: 0.8rem;
+  --text-ui--line-height: 1.5;
+  --text-fine: 0.72rem;
+  --text-fine--line-height: 1.5;
+  --text-nano: 0.625rem;
+  --text-nano--line-height: 1.4;
+
+  /* Rythme */
+  --spacing-section: clamp(4.5rem, 12vw, 10rem);
+  --spacing-gutter: 1.25rem;
+  --spacing-gutter-lg: 2.5rem;
+
+  /* Formes et mouvement */
+  --radius-xs: 2px;
+  --ease-editorial: cubic-bezier(0.2, 0.7, 0.3, 1);
+
+  --animate-rise: rise 0.9s var(--ease-editorial) both;
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-creme);
+    color: var(--color-noir);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: 400;
+  }
+
+  ::selection {
+    background-color: var(--color-beige);
+    color: var(--color-noir);
+  }
+
+  /*
+    Anneau bicolore : le trait noir se voit sur les fonds clairs, le halo crème
+    sur les fonds sombres. Un anneau doré unique tombait à 1,90:1 sur le crème,
+    donc invisible au clavier.
+  */
+  :focus-visible {
+    outline: 2px solid var(--color-noir);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px var(--color-creme);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* Libellé micro : réservé aux étiquettes de marque et de catégorie.
+   Ne pas l'employer comme surtitre au-dessus de chaque section. */
+@utility micro {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+/* Mesure de lecture confortable pour le corps de texte. */
+@utility measure {
+  max-width: 62ch;
+}
